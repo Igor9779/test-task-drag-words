@@ -1,0 +1,33 @@
+/* Стилізація літер */
+.letter {
+  display: inline-block;
+  position: absolute;
+  margin: 2px;
+  padding: 2px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+/* Виділення літери – змінюємо фон */
+.selected {
+  background-color: yellow;
+}
+
+/* Контейнер для розміщення літер */
+#container {
+  position: relative;
+  border: 1px solid #ccc;
+  min-height: 100px;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+/* Прямокутник для виділення */
+#selection-rect {
+  position: absolute;
+  border: 1px dashed #000;
+  background-color: rgba(0, 0, 255, 0.2);
+  pointer-events: none;
+  display: none;
+}
