@@ -41,7 +41,8 @@ btn.addEventListener("click", () => {
 
 // Обробка кліку: при натисканні з Ctrl перемикаємо клас виділення та фон літери
 function letterClick(e) {
-  if (e.ctrlKey) {
+  console.log(e.metaKey);
+  if (e.metaKey) {
     e.target.classList.toggle("selected");
     if (e.target.classList.contains("selected")) {
       e.target.style.backgroundColor = "yellow";
@@ -55,7 +56,7 @@ function letterClick(e) {
 // Обробка mousedown для перетягування літери або групи
 function letterMouseDown(e) {
   // Якщо натиснуто Ctrl – не починати перетягування (залишається лише виділення)
-  if (e.ctrlKey) return;
+  if (e.metaKey) return;
 
   // Якщо натиснута клавіша Shift – запускаємо режим розкидання (для слова)
   if (e.shiftKey) {
@@ -172,12 +173,14 @@ container.addEventListener("mousedown", function (e) {
   // Якщо клік на контейнері, але не на літері, запускаємо режим виділення
   if (e.target === container) {
     isSelecting = true;
+
     selectStart = { x: e.clientX, y: e.clientY };
     selectionRect.style.left = selectStart.x + "px";
     selectionRect.style.top = selectStart.y + "px";
     selectionRect.style.width = "0px";
     selectionRect.style.height = "0px";
     selectionRect.style.display = "block";
+    selectionRect.style.opacity = "1";
   }
 });
 
@@ -199,11 +202,15 @@ document.addEventListener("mousemove", function (e) {
 document.addEventListener("mouseup", function (e) {
   if (isSelecting) {
     isSelecting = false;
-    selectionRect.style.display = "none";
+    selectionRect.style.opacity = "0";
     const rect = selectionRect.getBoundingClientRect();
     document.querySelectorAll(".letter").forEach((letter) => {
+      console.log(letter);
       const letterRect = letter.getBoundingClientRect();
+      console.log(letterRect);
+      console.log(rect);
       if (intersectRect(rect, letterRect)) {
+        console.log(letter);
         // Якщо літера вже виділена, знімаємо виділення, інакше додаємо
         if (letter.classList.contains("selected")) {
           letter.classList.remove("selected");
